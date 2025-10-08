@@ -9,15 +9,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Subscriber {
+public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-    private Long publisherId;
-
+    private long subscriptionId;
+    private long publisherId;
+    private long followerId;
+    private Timestamp createdAt;
 }
