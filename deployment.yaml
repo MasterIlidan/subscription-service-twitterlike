@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscription-service-twitterlike
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: subscription-service-twitterlike
+  template:
+    metadata:
+      labels:
+        app: subscription-service-twitterlike
+    spec:
+      containers:
+        - name: subscription-service-twitterlike
+          image: localhost:32000/subscription-service-twitterlike:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
