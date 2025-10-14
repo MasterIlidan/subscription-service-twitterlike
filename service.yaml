@@ -7,6 +7,6 @@ spec:
     app: subscription-service-twitterlike
   ports:
     - protocol: TCP
-      port: 8080
+      port: 8082
       targetPort: 8080
   type: NodePort
