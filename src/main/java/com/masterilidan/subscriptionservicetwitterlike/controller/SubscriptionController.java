@@ -12,7 +12,9 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
+//TODO: разобраться с CORS
+@CrossOrigin(origins = "http://192.168.0.147:5173")
+
 @Controller
 public class SubscriptionController {
 
