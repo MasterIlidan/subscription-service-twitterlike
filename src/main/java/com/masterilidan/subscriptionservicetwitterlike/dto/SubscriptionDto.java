@@ -1,9 +1,6 @@
 package com.masterilidan.subscriptionservicetwitterlike.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -11,9 +8,14 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class SubscriptionDto {
+    @ToString.Include
     private long id;
+    @ToString.Include
     private long publisherId;
+    @ToString.Include
     private long followerId;
+    @ToString.Include
     private Timestamp createdAt;
 }

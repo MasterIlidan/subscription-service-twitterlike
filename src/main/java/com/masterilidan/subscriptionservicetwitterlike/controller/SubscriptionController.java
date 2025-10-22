@@ -3,6 +3,7 @@ package com.masterilidan.subscriptionservicetwitterlike.controller;
 import com.masterilidan.subscriptionservicetwitterlike.dto.SubscriptionDto;
 import com.masterilidan.subscriptionservicetwitterlike.entity.Subscription;
 import com.masterilidan.subscriptionservicetwitterlike.repository.SubscriptionRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,8 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
-//TODO: разобраться с CORS
-@CrossOrigin(origins = "http://192.168.0.147:5173")
-
 @Controller
+@Slf4j
 public class SubscriptionController {
 
     private final SubscriptionRepository subscriptionRepository;
@@ -26,6 +25,7 @@ public class SubscriptionController {
 
     @PostMapping("/subscription")
     public ResponseEntity<SubscriptionDto> subscribe(@RequestBody SubscriptionDto subscriptionDto) {
+        log.debug("subscribe: {}", subscriptionDto);
         //TODO: проверка существования пользователя в User Management
 
         if (isExistsByPublisherIdAndFollowerId(subscriptionDto)) {
@@ -37,11 +37,13 @@ public class SubscriptionController {
         subscription.setFollowerId(subscriptionDto.getFollowerId());
         subscription.setCreatedAt(Timestamp.from(Instant.now()));
         subscriptionRepository.save(subscription);
+        log.debug("subscribe complete: {}", subscriptionDto);
         return new ResponseEntity<>(subscriptionDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/subscription")
     public HttpStatus unsubscribe(@RequestBody SubscriptionDto subscriptionDto) {
+        log.debug("unsubscribe userId={}", subscriptionDto);
         if (!isExistsByPublisherIdAndFollowerId(subscriptionDto)) {
             return HttpStatus.NOT_FOUND;
         }
@@ -54,6 +56,7 @@ public class SubscriptionController {
 
     @GetMapping("/subscription/follower{userId}")
     public ResponseEntity<List<Subscription>> getUserSubscriptions(@PathVariable long userId) {
+        log.debug("getUserSubscriptions userId={}", userId);
         List<Subscription> allByFollowerId = subscriptionRepository.findAllByFollowerId(userId);
         return new ResponseEntity<>(allByFollowerId, HttpStatus.OK);
     }
